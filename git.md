@@ -1,92 +1,121 @@
 # Git使用规范
 
-### 前言
+*企业采用 [gitlab](http://gitlab.rmny.tech/) 进行代码托管， 仓库地址 <http://gitlab.rmny.tech/>*
 
-1. 企业采用 github 进行代码托管，所有项目源码均存放于github上
-2. 企业采用Github Flow工作流进行代码管理
-3. 企业 github 地址 <https://github.com/mockingbot>
-4. 当需要指定仓库权限时，请联系github管理员（长熙）
+*当需要仓库权限时，请联系gitlab管理员（房立俊）*
 
-# Github Flow
+## 目录
 
-1. 根据需求，从`master`拉出新分支，不区分功能分支或补丁分支。
-2. 在本地分支完成功能开发后，提交代码，并及时推送至远程仓库。
-3. 当想合并分支时，可以发起一个 pull request（简称PR）。
-4. 当 review 或者讨论通过后，你的pull request被接受，代码会合并到目标分支。
-5. 一旦合并到 master 分支，及时部署。
+1. [工具](#工具)
 
-说明：
+1. [工作流](#工作流)
 
-* 只有一个长期分支 master ,而且 master 分支上的代码，永远是可发布状态,一般 master 会设置 protected 分支保护，只有有权限的人才能推送代码到 master 分支。
-* 本企业除imock-rails仓库以edge分支作为主分支，其他均以master分支作为主分支。
+1. [Branch规范](#Branch规范)
 
-* pull request既是一个通知，让别人注意到你的请求，又是一种对话机制，大家一起评审和讨论你的代码。`对话过程中，你还可以不断提交代码`。
+1. [Commit规范](#Commit规范)
 
-### 使用流程
+1. [Push规范](#Push规范)
 
-1. 根据项目需求从github上拉取代码仓库
+1. [Tag规范](#Tag规范)
+
+1. [常用命令](#常用命令)
+
+# 工具
+
+[Git-CLI](https://git-scm.com/docs)、 [GitHub DeskTop](https://desktop.github.com/)
+
+# 工作流
+
+*在开始前，请先配置本地的ssh环境，然后将公钥配置到 [GitLab](http://gitlab.rmny.tech/) 的 Setting > SSH Keys 中*
+
+> 这样可以通过ssh来管理推送，避免在后续的git操作中频繁输入git账号与密码。
+
+```bash
+# 基于邮箱生成ssh key
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" 
+
+# 查看本机公钥
+cd ~ && cat .ssh/id_rsa.pub 
+```
+
+1. 根据项目需求从gitlab上拉取代码仓库
+
+   > 建议使用 ssh 链接
 
    ```bash
    git clone <仓库地址>
    ```
 
-2. 根据任务目标在github上新建目标分支，如：yj/ws，并拉取到本地，作为修改代码仓库
+2. 根据任务目标在本地新建目标分支，如：yj/fix-bugs，作为修改代码仓库
+   > 分支名请根据[Branch规范](#branch规范)进行合理命名
 
    ```bash
-   git fetch  #github上新建分支后执行，在本地获取仓库的变更记录，此处获取新建的分支记录
-   git checkout <分支名> #在本地建立分支，与origin上分支名保持一致
+   git checkout -b <分支名>
    ```
-
-   注意：分支名请根据Branch规范进行合理命名，方便识别及管理
 
 3. 修改代码后，提交修改内容
+   > commit message 须遵从[Commit规范](#commit规范)
+
+   > 原则上要求每完成一个功能需要或修改，提交一个commit，
+
+   > push 须遵从[Push规范](#push规范)
 
    ```bash
-   git add <修改内容> #提交代码到暂存区
-   git commit  -m '[description]'  #添加commit描述
-   git push #将本地commit push到github上
+   # 提交代码到暂存区
+   git add <修改内容>
+
+   # 添加commit描述
+   git commit  -m '[message]'
+
+   # 将本地commit push到gitlab上
+   git push
+
+   # 首次提交分支执行
+   git push --set-upstream origin <分支名>
    ```
 
-   注意：
+4. 当需要将代码合并到主分支时，需要在gitlab上发起一个 Pull Request（简称PR）, 并将PR的地址发给 review 代码的同事， 通知其 code review 及 合并。
 
-   * commit 描述需按照commit规范进行添加
-   * 原则上每完成一个功能需要提交一个commit
-   * push代码时，若遇到冲突，禁止强行push，需在本地解决冲突后再push（自己个人分支确认后除外）
+5. 当 review 或者讨论通过后，你的PR被接受，代码会合并到目标分支。
 
-### Branch规范
+6. 一旦合并到 部署分支（如master等），要及时部署。
 
-##### 使用规范
+# Branch规范
 
-1. 每当开始一个新的任务时，需要从目标仓库切一个branch出来，作为自己的工作空间
-2. 根据需求从目标branch切出自己的branch，一般是从master或edge 切出
-3. 分支命名需以英文命名，如无必要，禁止使用拼音
-4. 当描述需要多个单词，以中划线（-）进行连接，如  yj/update-mb-rich-text
+## 使用规范
 
-##### 命名规范
+1. 每当开始一个新的任务时，需要从目标仓库切一个branch出来，作为自己的工作空间。
+2. 每当结束一个阶段的开发时，在代码合并后要及时删除分支branch。
 
-1. 分支项目命名规范
+## 命名规范
 
-   格式：<姓名简称>/<项目名称或简称>[-<目的>]
+*分支命名需以英文命名，如非必要，禁止使用拼音。*
 
-   参考：yj/ws、yj/ws-rebase
+*当描述需要多个单词，以中划线（-）进行连接，如  yj/update-rich-text。*
 
-2. 主项目命名规范
+1. 主项目分支命名规范
+   > 将合并到 master 的分支
 
    格式：<姓名简称>/<功能目的>
 
-   参考：yj/theme、yj/update-mb-rich-text
+   参考：yj/theme、yj/update-rich-text
 
-3. 生产/开发分支命名规范
+2. 子项目分支命名规范
+   > 将合并到 prod/hs、test/hs、dev/hs 的分支
 
-   格式：（prod|dev）/<项目名称>
+   格式：<姓名简称>/<项目名称或简称>[-<目的>]
 
-   参考：prod/ws、dev/ws
+   参考：yj/hs、yj/hs-update-rich-text
+
+3. 生产/测试/开发分支命名规范
+
+   格式：（prod|test|dev）/<项目名称>
+
+   参考：prod/hs、test/hs、dev/hs
 
 4. 特殊分支命名规范
 
-   主分支：master
-
-   内测环境：edge
+   主分支：master 或 main
 
 ### commit规范
 
