@@ -1,8 +1,8 @@
 # Git使用规范
 
-*企业采用 [gitlab](http://gitlab.rmny.tech/) 进行代码托管， 仓库地址 <http://gitlab.rmny.tech/>*
+*企业采用 [GitLab](http://gitlab.rmny.tech/) 进行代码托管， 仓库地址 <http://gitlab.rmny.tech/>*
 
-*当需要仓库权限时，请联系gitlab管理员（房立俊）*
+*当需要仓库权限时，请联系GitLab管理员（房立俊）*
 
 ## 目录
 
@@ -22,7 +22,7 @@
 
 # 工具
 
-[Git-CLI](https://git-scm.com/docs)、 [GitHub DeskTop](https://desktop.github.com/)
+[Git-CLI](https://git-scm.com/docs)、 [GitHub DeskTop](https://desktop.github.com/)、[GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)(VSCode插件)
 
 # 工作流
 
@@ -85,7 +85,7 @@ cd ~ && cat .ssh/id_rsa.pub
 ## 使用规范
 
 1. 每当开始一个新的任务时，需要从目标仓库切一个branch出来，作为自己的工作空间。
-2. 每当结束一个阶段的开发时，在代码合并后要及时删除分支branch。
+2. 每当结束一个阶段的开发时，在代码合并后要及时删除branch。
 
 ## 命名规范
 
@@ -94,14 +94,12 @@ cd ~ && cat .ssh/id_rsa.pub
 *当描述需要多个单词，以中划线（-）进行连接，如  yj/update-rich-text。*
 
 1. 主项目分支命名规范
-   > 将合并到 master 的分支
 
    格式：<姓名简称>/<功能目的>
 
    参考：yj/theme、yj/update-rich-text
 
 2. 子项目分支命名规范
-   > 将合并到 prod/hs、test/hs、dev/hs 的分支
 
    格式：<姓名简称>/<项目名称或简称>[-<目的>]
 
@@ -117,50 +115,53 @@ cd ~ && cat .ssh/id_rsa.pub
 
    主分支：master 或 main
 
-### commit规范
+# commit规范
 
-##### 前言
+## 使用规范
 
-1. 公司采用rebase 机制来进行commit管理，这样保证了代码commit的整洁干净。
+1. 原则上是处理一个需求，提交一个commit,若同时处理了多个问题，需要将commit拆成多个来提交
+2. commit message以单行文字简短描述，能描述清楚改动内容。
+3. 推荐采用 [rebase](https://git-scm.com/docs/git-rebase) 来进行 commit log 管理， 避免不必要的 merge 记录。
 
-##### 编写规范
+## 编写规范
 
-1. commit文本规范
+1. commit文本格式
 
-   格式：<type>: description
+   ```bash
+      <type>: description
+   ```
 
-   注意：冒号后有一个空格
+> type代表某次提交的类型，如FIX、FEAT等, 注意冒号后有一个英文空格
 
-   type类型：
+> description推荐为中文，必要关键字或表达需要情况下使用英文
 
-   ADD: 添加一个新功能
+1. type类型
 
-   FIX: 修复一个功能
+   `RELEASE`: 升级version
 
-   DEL: 删除一个功能或一个文件
-   UPG: 更新一个仓库版本
-   OPT: 优化
+   `CHORE`: 改变构建流程、或增加依赖库、继承测试等
 
-   DOC: 文档修改
-   TEST: 测试版本
+   `DOCS`: 仅修改了文档，如README、CHANGELOG等
 
-   STYLE: 优化样式
+   `FEAT`: 添加一个新功能
 
-   CI： 与CI（持续集成服务）有关的改动
+   `FIX`: 修复Bug
 
-   REF:  代码重构
+   `PERF`: 优化相关，比如提升性能、体验
 
-   description推荐为中文，必要关键字或表达需要情况下使用英文
+   `REFACTOR`: 代码重构，没有加新的功能或修复bug
 
-2. commit提交规范
+   `REVERT`: 回滚到上一个版本或commit
 
-   原则上是处理一个issue，提交一个commit,若同时处理了多个问题，需要将commit拆成多个来提交
+   `STYLE`: 仅修改了空格、格式缩进、代码排版等，不改变代码逻辑
+
+   `TEST`: 测试用例，包括单元测试、集成测试等
 
 # push规范
 
    1. 原则上当出现push冲突时，严禁强行push，需处理好冲突后再push。
    2. push前请code review自己的改动，避免push时携带一些测试数据，而导致的上线问题。因为push后所引起的修改
 
-   Tag 规范
+# Tag 规范
 
 # 常用Git命令
