@@ -162,6 +162,96 @@ cd ~ && cat .ssh/id_rsa.pub
    1. 原则上当出现push冲突时，严禁强行push，需处理好冲突后再push。
    2. push前请code review自己的改动，避免push时携带一些测试数据，而导致的上线问题。因为push后所引起的修改
 
+基本遵循 [Semver](https://semver.org/lang/zh-CN/) 规范，并稍微做了点调整。
+
 # Tag 规范
 
-# 常用Git命令
+## 编写规范
+
+### master分支tag规范
+
+格式： major.minor.patch
+
+如：1.0.0
+
+### 子项目分支tag规范
+
+格式：major.minor.patch-<项目名>[.<序号>]
+
+如： 1.0.0-hsxc、1.0.0-hsxc.1
+
+### 测试版本tag规范
+
+格式：major.minor.patch-dev[.<序号>]
+
+如： 1.0.0-dev、1.0.0-dev.1
+
+### 业务项目规范
+
+* major(主版本号): 当项目产生一个阶段性的升级时新增，
+* minor(次版本号): 当项目做了新的功能或升级时新增,匹配`FEAT`、`CHORE`、`TEST`。
+* patch(修订号): 当项目做了bug fix时新增，匹配`FIX`、`PERF`、`REFACTOR`、`REVERT`、`STYLE`。
+  
+### 工具库规范
+
+* major(主版本号):当你做了不兼容的 API 修改，
+* minor(次版本号):当你做了向下兼容的功能性新增，
+* patch(修订号):当你做了向下兼容的问题修正。
+
+## 使用说明
+
+1. 标准的版本号只能基于master分支打版本
+
+# push规范
+
+   1. 原则上当出现push冲突时，严禁强行push，需处理好冲突后再push。
+   2. push前请code review自己的改动，避免push时携带一些测试数据，而导致的上线问题。因为push后所引起的修改成本更高。
+
+# 常用命令
+
+*推荐使用rebase来进行管理操作,避免产生不必要的commit*
+
+1. 当本地分支落后origin时，将本地新增提交推上master（本地：master, 目标origin/masters)
+
+   ```bash
+   # 同步本地origin与远程一致
+   git fetch
+
+   #基于开发分支rebase 最新的 master
+   git rebase origin/master
+
+   # 将更新后的commit提交
+   git push
+   ```
+
+2. 删除某一条commit 记录
+
+   ```bash
+   git rebase -i head~10
+   ```
+
+   将光标移动到 待删除commit 前，通过 `dd` 快捷键 进行删除，然后 `esc > :wq`
+
+3. 更换 commit 在 log 中的位置
+
+   ```bash
+   git rebase -i head~10
+   ```
+
+   复制目标commit到目标位置， 通过`dd` 快捷键 删除之前的 commit，然后 `esc > :wq`
+
+4. 编辑log 中指定的commit
+
+   ```bash
+   git rebase -i head~10
+   ```
+
+   根据提示将目标commit 前的 `pick` 改为 `e`， 然后 `esc > :wq`，进如编辑状态
+
+   修改代码后
+
+   ```base
+   git add .
+
+   git rebase --continue
+   ```
