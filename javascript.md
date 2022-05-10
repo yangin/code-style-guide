@@ -1656,8 +1656,6 @@ _使用 JavaScript 最合理的方式_。
 
 **[⬆ 返回顶部](#目录)**
 
--- CONTINUE
-
 ## 属性
 
 <a name="12.1"></a>
@@ -1729,7 +1727,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="13.2"></a>
   <a name="variables--one-const"></a>
 
-- [13.2]() 为每个变量声明都用一个 `const` 或 `let`。eslint: [`one-var`](http://eslint.org/docs/rules/one-var.html)
+- [13.2]() 【强制】为每个变量声明都用一个 `const` 或 `let`。eslint: [`one-var`](http://eslint.org/docs/rules/one-var.html)
 
   > 为什么？这种方式很容易去声明新的变量，而不用去上一个变量后追加 `,`。
 
@@ -1754,7 +1752,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="13.3"></a>
   <a name="variables--const-let-group"></a>
 
-- [13.3]()【推荐】把`const` 和 `let` 分别放一起。
+- [13.3](*)【推荐】把`const` 和 `let` 分别放一起。
 
   > 为什么？在你需要分配一个新的变量，而这个变量依赖之前分配过的变量的时候，这种做法是有帮助的。
 
@@ -1784,7 +1782,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="13.4"></a>
   <a name="variables--define-where-used"></a>
 
-- [13.4]()【推荐】在你需要的地方声明变量，但是要放在合理的位置。
+- [13.4](*)【推荐】在你需要的地方声明变量，但是要放在合理的位置。
 
   > 为什么？`let` 和 `const` 都是块级作用域而不是函数级作用域, 同时可以避免多余的性能开销。
 
@@ -1862,7 +1860,8 @@ _使用 JavaScript 最合理的方式_。
   <a name="13.6"></a>
   <a name="variables--unary-increment-decrement"></a>
 
-- [13.6]()【强制】不要使用一元自增自减运算符（`++`， `--`）. eslint [`no-plusplus`](http://eslint.org/docs/rules/no-plusplus)
+<!-- TODO: 更喜欢用 `++` 和 `--`。 -->
+- [13.6](?)【推荐】不要使用一元自增自减运算符（`++`， `--`）. eslint [`no-plusplus`](http://eslint.org/docs/rules/no-plusplus)
 
   > 为什么？使用 `num + = 1` 而不是 `num ++` 或 `num ++` 语句是含义清晰的。 禁止一元增量和减量语句还会阻止您无意地预增/预减值，这也会导致程序出现意外行为。
 
@@ -1904,16 +1903,20 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  const foo = superLongLongLongLongLongLongLongLongFunctionName();
+  const foo =
+    superLongLongLongLongLongLongLongLongFunctionName();
 
   // bad
-  const foo = "superLongLongLongLongLongLongLongLongString";
+  const foo
+    = 'superLongLongLongLongLongLongLongLongString';
 
   // good
-  const foo = superLongLongLongLongLongLongLongLongFunctionName();
+  const foo = (
+    superLongLongLongLongLongLongLongLongFunctionName()
+  );
 
   // good
-  const foo = "superLongLongLongLongLongLongLongLongString";
+  const foo = 'superLongLongLongLongLongLongLongLongString';
   ```
 
   <a name="13.8"></a>
@@ -2094,7 +2097,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="15.3"></a>
   <a name="comparison--shortcuts"></a>
 
-- [15.3]()【推荐】布尔值要用缩写，而字符串和数字要明确使用比较操作符。
+- [15.3](*)【强制】布尔值要用缩写，而字符串和数字要明确使用比较操作符。
 
   ```javascript
   // bad
@@ -2257,11 +2260,12 @@ _使用 JavaScript 最合理的方式_。
 <a name="16.1"></a>
 <a name="blocks--braces"></a>
 
-- [16.1]()【推荐】用大括号包裹多行代码块。 eslint: [`nonblock-statement-body-position`](https://eslint.org/docs/rules/nonblock-statement-body-position)
+- [16.1]()【强制】用大括号包裹多行代码块, 禁止单行语句之前有换行。 eslint: [`nonblock-statement-body-position`](https://eslint.org/docs/rules/nonblock-statement-body-position)
 
   ```javascript
   // bad
-  if (test) return false;
+  if (test)
+    return false;
 
   // good
   if (test) return false;
@@ -2272,9 +2276,7 @@ _使用 JavaScript 最合理的方式_。
   }
 
   // bad
-  function foo() {
-    return false;
-  }
+  function foo() { return false; }
 
   // good
   function bar() {
@@ -2288,11 +2290,12 @@ _使用 JavaScript 最合理的方式_。
 - [16.2]()【强制】`if` 表达式的 `else` 和 `if` 的右大括号在一行。eslint: [`brace-style`](http://eslint.org/docs/rules/brace-style.html)
 
   ```javascript
-  // bad
+   // bad
   if (test) {
     thing1();
     thing2();
-  } else {
+  }
+  else {
     thing3();
   }
 
@@ -2379,51 +2382,55 @@ _使用 JavaScript 最合理的方式_。
 <a name="17.1"></a>
 <a name="control-statements"></a>
 
-- [17.1]()【推荐】当你的控制语句（`if`, `while` 等）太长或者超过最大长度限制的时候，把每一个（组）判断条件放在单独一行里。逻辑操作符放在行首。
+- [17.1](*)【推荐】当你的控制语句（`if`, `while` 等）太长或者超过最大长度限制的时候，把每一个（组）判断条件放在单独一行里。逻辑操作符放在行首。
 
   > 为什么？把逻辑操作符放在行首是让操作符的对齐方式和链式函数保持一致。这提高了可读性，也让复杂逻辑更清晰。
 
   ```javascript
   // bad
+  if ((foo === 123 || bar === 'abc') && doesItLookGoodWhenItBecomesThatLong() && isThisReallyHappening()) {
+    thing1();
+  }
+
+  // bad
+  if (foo === 123 &&
+    bar === 'abc') {
+    thing1();
+  }
+
+  // bad
+  if (foo === 123
+    && bar === 'abc') {
+    thing1();
+  }
+
+  // bad
   if (
-    (foo === 123 || bar === "abc") &&
-    doesItLookGoodWhenItBecomesThatLong() &&
-    isThisReallyHappening()
-  ) {
-    thing1();
-  }
-
-  // bad
-  if (foo === 123 && bar === "abc") {
-    thing1();
-  }
-
-  // bad
-  if (foo === 123 && bar === "abc") {
-    thing1();
-  }
-
-  // bad
-  if (foo === 123 && bar === "abc") {
-    thing1();
-  }
-
-  // good
-  if (foo === 123 && bar === "abc") {
-    thing1();
-  }
-
-  // good
-  if (
-    (foo === 123 || bar === "abc") &&
-    doesItLookGoodWhenItBecomesThatLong() &&
-    isThisReallyHappening()
+    foo === 123 &&
+    bar === 'abc'
   ) {
     thing1();
   }
 
   // good
-  if (foo === 123 && bar === "abc") {
+  if (
+    foo === 123
+    && bar === 'abc'
+  ) {
+    thing1();
+  }
+
+  // good
+  if (
+    (foo === 123 || bar === 'abc')
+    && doesItLookGoodWhenItBecomesThatLong()
+    && isThisReallyHappening()
+  ) {
+    thing1();
+  }
+
+  // good
+  if (foo === 123 && bar === 'abc') {
     thing1();
   }
   ```
@@ -2431,7 +2438,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="17.2"></a>
   <a name="control-statements--value-selection"></a>
 
-- [17.2]()【推荐】采用选择操作符代替控制语句（即短路写法）。
+- [17.2](*)【推荐】采用选择操作符代替控制语句（即短路写法）。
 
   ```javascript
   // bad
@@ -2480,7 +2487,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="18.2"></a>
   <a name="comments--singleline"></a>
 
-- [18.2]()【推荐】单行注释用 `//`，在变量声明时，将注释放在被注释变量名后，且对齐，注释表达式时将单行注释放在被注释区域上面。如果注释不是在第一行，那么注释前面就空一行。
+- [18.2](*)【推荐】单行注释用 `//`，在变量声明时，将注释放在被注释变量名后，且对齐，注释表达式时将单行注释放在被注释区域上面。如果注释不是在第一行，那么注释前面就空一行。
 
   ```javascript
   // bad
@@ -2621,6 +2628,8 @@ _使用 JavaScript 最合理的方式_。
 <a name="whitespace--spaces"></a>
 
 - [19.1]()【强制】一个缩进使用两个空格。eslint: [`indent`](http://eslint.org/docs/rules/indent.html)
+  
+  > 在写html时可以写更多的内容
 
   ```javascript
   // bad
@@ -2675,8 +2684,8 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  if (isJedi) {
-    fight();
+  if(isJedi) {
+    fight ();
   }
 
   // good
@@ -2685,13 +2694,13 @@ _使用 JavaScript 最合理的方式_。
   }
 
   // bad
-  function fight() {
-    console.log("Swooosh!");
+  function fight () {
+    console.log ('Swooosh!');
   }
 
   // good
   function fight() {
-    console.log("Swooosh!");
+    console.log('Swooosh!');
   }
   ```
 
@@ -2742,46 +2751,52 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  $("#items").find(".selected").highlight().end().find(".open").updateCount();
+  $('#items').find('.selected').highlight().end().find('.open').updateCount();
 
   // bad
-  $("#items").find(".selected").highlight().end().find(".open").updateCount();
+  $('#items').
+    find('.selected').
+      highlight().
+      end().
+    find('.open').
+      updateCount();
 
   // good
-  $("#items").find(".selected").highlight().end().find(".open").updateCount();
+  $('#items')
+    .find('.selected')
+      .highlight()
+      .end()
+    .find('.open')
+      .updateCount();
 
   // bad
-  const leds = stage
-    .selectAll(".led")
-    .data(data)
-    .enter()
-    .append("svg:svg")
-    .classed("led", true)
-    .attr("width", (radius + margin) * 2)
-    .append("svg:g")
-    .attr("transform", `translate(${radius + margin},${radius + margin})`)
-    .call(tron.led);
+  const leds = stage.selectAll('.led').data(data).enter().append('svg:svg').classed('led', true)
+      .attr('width', (radius + margin) * 2).append('svg:g')
+      .attr('transform', `translate(${radius + margin},${radius + margin})`)
+      .call(tron.led);
 
   // good
-  const leds = stage
-    .selectAll(".led")
-    .data(data)
-    .enter()
-    .append("svg:svg")
-    .classed("led", true)
-    .attr("width", (radius + margin) * 2)
-    .append("svg:g")
-    .attr("transform", `translate(${radius + margin},${radius + margin})`)
-    .call(tron.led);
+  const leds = stage.selectAll('.led')
+      .data(data)
+    .enter().append('svg:svg')
+      .classed('led', true)
+      .attr('width', (radius + margin) * 2)
+    .append('svg:g')
+      .attr('transform', `translate(${radius + margin},${radius + margin})`)
+      .call(tron.led);
 
   // good
-  const leds = stage.selectAll(".led").data(data);
+  const leds = stage.selectAll('.led').data(data);
+  const svg = leds.enter().append('svg:svg');
+  svg.classed('led', true).attr('width', (radius + margin) * 2);
+  const g = svg.append('svg:g');
+  g.attr('transform', `translate(${radius + margin},${radius + margin})`).call(tron.led);
   ```
 
   <a name="19.7"></a>
   <a name="whitespace--after-blocks"></a>
 
-- [19.7]()【强制】在一个代码块后下一条语句前空一行。
+- [19.7](*)【强制】在一个代码块后下一条语句前空一行。
 
   ```javascript
   // bad
@@ -2831,14 +2846,26 @@ _使用 JavaScript 最合理的方式_。
   ```javascript
   // bad
   function bar() {
+
     console.log(foo);
+
   }
 
-  // also bad
+  // bad
   if (baz) {
+
     console.log(qux);
   } else {
     console.log(foo);
+
+  }
+
+  // bad
+  class Foo {
+
+    constructor(bar) {
+      this.bar = bar;
+    }
   }
 
   // good
@@ -2909,7 +2936,7 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  function bar(foo) {
+  function bar( foo ) {
     return foo;
   }
 
@@ -2919,7 +2946,7 @@ _使用 JavaScript 最合理的方式_。
   }
 
   // bad
-  if (foo) {
+  if ( foo ) {
     console.log(foo);
   }
 
@@ -2936,10 +2963,10 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  const foo = [1, 2, 3];
-  console.log(foo[0]);
+  const foo = [ 1, 2, 3 ];
+  console.log(foo[ 0 ]);
 
-  // good，逗号分隔符后还是要空格的。
+  // good
   const foo = [1, 2, 3];
   console.log(foo[0]);
   ```
@@ -2951,10 +2978,10 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  const foo = { clark: "kent" };
+  const foo = {clark: 'kent'};
 
   // good
-  const foo = { clark: "kent" };
+  const foo = { clark: 'kent' };
   ```
 
   <a name="19.13"></a>
@@ -2966,40 +2993,27 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  const foo =
-    jsonData &&
-    jsonData.foo &&
-    jsonData.foo.bar &&
-    jsonData.foo.bar.baz &&
-    jsonData.foo.bar.baz.quux &&
-    jsonData.foo.bar.baz.quux.xyzzy;
+  const foo = jsonData && jsonData.foo && jsonData.foo.bar && jsonData.foo.bar.baz && jsonData.foo.bar.baz.quux && jsonData.foo.bar.baz.quux.xyzzy;
 
   // bad
-  $.ajax({
-    method: "POST",
-    url: "https://yangjin.com/",
-    data: { name: "John" },
-  })
-    .done(() => console.log("Congratulations!"))
-    .fail(() => console.log("You have failed this city."));
+  $.ajax({ method: 'POST', url: 'https://airbnb.com/', data: { name: 'John' } }).done(() => console.log('Congratulations!')).fail(() => console.log('You have failed this city.'));
 
   // good
-  const foo =
-    jsonData &&
-    jsonData.foo &&
-    jsonData.foo.bar &&
-    jsonData.foo.bar.baz &&
-    jsonData.foo.bar.baz.quux &&
-    jsonData.foo.bar.baz.quux.xyzzy;
+  const foo = jsonData
+    && jsonData.foo
+    && jsonData.foo.bar
+    && jsonData.foo.bar.baz
+    && jsonData.foo.bar.baz.quux
+    && jsonData.foo.bar.baz.quux.xyzzy;
 
   // good
   $.ajax({
-    method: "POST",
-    url: "https://yangjin.com/",
-    data: { name: "John" },
+    method: 'POST',
+    url: 'https://airbnb.com/',
+    data: { name: 'John' },
   })
-    .done(() => console.log("Congratulations!"))
-    .fail(() => console.log("You have failed this city."));
+    .done(() => console.log('Congratulations!'))
+    .fail(() => console.log('You have failed this city.'));
   ```
 
   <a name="19.14"></a>
@@ -3009,20 +3023,12 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  function foo() {
-    return true;
-  }
-  if (foo) {
-    bar = 0;
-  }
+  function foo() {return true;}
+  if (foo) { bar = 0;}
 
   // good
-  function foo() {
-    return true;
-  }
-  if (foo) {
-    bar = 0;
-  }
+  function foo() { return true; }
+  if (foo) { bar = 0; }
   ```
 
   <a name="19.15"></a>
@@ -3049,17 +3055,16 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  obj[foo];
-  obj["foo"];
-
-  var x = { [b]: a };
-  obj[foo[bar]];
+  obj[foo ]
+  obj[ 'foo']
+  var x = {[ b ]: a}
+  obj[foo[ bar ]]
 
   // good
-  obj[foo];
-  obj["foo"];
-  var x = { [b]: a };
-  obj[foo[bar]];
+  obj[foo]
+  obj['foo']
+  var x = { [b]: a }
+  obj[foo[bar]]
   ```
 
   <a name="19.17"></a>
@@ -3069,9 +3074,10 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  func();
+  func ();
 
-  func();
+  func
+  ();
 
   // good
   func();
@@ -3084,8 +3090,8 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  var obj = { foo: 42 };
-  var obj2 = { foo: 42 };
+  var obj = { foo : 42 };
+  var obj2 = { foo:42 };
 
   // good
   var obj = { foo: 42 };
@@ -3105,11 +3111,13 @@ _使用 JavaScript 最合理的方式_。
   // bad - multiple empty lines
   var x = 1;
 
+
   var y = 2;
 
-  // bad - 1+ newline(s) at end of file
+  // bad - 2+ newlines at end of file
   var x = 1;
   var y = 2;
+
 
   // bad - 1+ newline(s) at beginning of file
 
@@ -3132,32 +3140,40 @@ _使用 JavaScript 最合理的方式_。
 
   ```javascript
   // bad
-  const story = [once, upon, aTime];
+  const story = [
+      once
+    , upon
+    , aTime
+  ];
 
   // good
-  const story = [once, upon, aTime];
+  const story = [
+    once,
+    upon,
+    aTime,
+  ];
 
   // bad
   const hero = {
-    firstName: "Ada",
-    lastName: "Lovelace",
-    birthYear: 1815,
-    superPower: "computers",
+      firstName: 'Ada'
+    , lastName: 'Lovelace'
+    , birthYear: 1815
+    , superPower: 'computers'
   };
 
   // good
   const hero = {
-    firstName: "Ada",
-    lastName: "Lovelace",
+    firstName: 'Ada',
+    lastName: 'Lovelace',
     birthYear: 1815,
-    superPower: "computers",
+    superPower: 'computers',
   };
   ```
 
   <a name="20.2"></a>
   <a name="commas--dangling"></a>
 
-- [20.2]()【强制】禁止在末尾添加额为逗号
+- [20.2]()【强制】禁止在末尾添加额为逗号。eslint: [`comma-dangle`](http://eslint.org/docs/rules/comma-dangle.html)
 
   ```javascript
   // bad
@@ -3166,39 +3182,71 @@ _使用 JavaScript 最合理的方式_。
     lastName: "Scully",
   };
 
-  const heroes = ["Batman", "Superman"];
+  const heroes = [
+    "Batman", 
+    "Superman",
+  ];
 
   // good
   const hero = {
     firstName: "Dana",
-    lastName: "Scully",
+    lastName: "Scully"
   };
 
-  const heroes = ["Batman", "Superman"];
+  const heroes = [
+    "Batman", 
+    "Superman"
+  ];
 
-  // bad
-  function createHero(firstName, lastName, inventorOf) {
+   // bad
+  function createHero(
+    firstName,
+    lastName,
+    inventorOf,
+  ) {
     // does nothing
   }
 
   // good
-  function createHero(firstName, lastName, inventorOf) {
+  function createHero(
+    firstName,
+    lastName,
+    inventorOf
+  ) {
     // does nothing
   }
 
-  // good (注意，逗号不应出现在使用了 ... 操作符后的参数后面)
-  function createHero(firstName, lastName, inventorOf, ...heroArgs) {
+  // good (note that a comma must not appear after a "rest" element)
+  function createHero(
+    firstName,
+    lastName,
+    inventorOf,
+    ...heroArgs
+  ) {
     // does nothing
   }
 
   // bad
-  createHero(firstName, lastName, inventorOf);
+  createHero(
+    firstName,
+    lastName,
+    inventorOf,
+  );
 
   // good
-  createHero(firstName, lastName, inventorOf);
+  createHero(
+    firstName,
+    lastName,
+    inventorOf
+  );
 
-  // good  (注意，逗号不应出现在使用了 ... 操作符后的参数后面)
-  createHero(firstName, lastName, inventorOf, ...heroArgs);
+  // good (note that a comma must not appear after a "rest" element)
+  createHero(
+    firstName,
+    lastName,
+    inventorOf,
+    ...heroArgs
+  );
   ```
 
 **[⬆ 返回顶部](#目录)**
@@ -3222,13 +3270,13 @@ _使用 JavaScript 最合理的方式_。
   }
 
   // good
-  const luke = {};
+  const luke = {}
   const leia = {}[(luke, leia)].forEach((jedi) => {
-    jedi.father = "vader";
-  });
+    jedi.father = "vader"
+  })
 
   function foo() {
-    return "search your feelings, you know it to be foo";
+    return "search your feelings, you know it to be foo"
   }
   ```
 
