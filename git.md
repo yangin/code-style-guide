@@ -1,9 +1,12 @@
 # Git 管理规范
 
+> [Git Book](https://git-scm.com/book/zh/v2)
+
 ## 目录
 
 1. [配置 SSH](#配置SSH)
 1. [工作流程](#工作流程)
+1. [常用命令](#常用命令)
 1. [Branch 规范](#Branch规范)
 1. [Commit 规范](#Commit规范)
 1. [Tag 规范](#Tag规范)
@@ -36,7 +39,104 @@ cd ~ && cat .ssh/id_rsa.pub
 
 ## 工作流程
 
-<img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/1-1-1.png">
+仓库原理
+<img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/reopsitory.png">
+
+工作流程
+<img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/workflow.png">
+
+**[⬆ 返回顶部](#目录)**
+
+<a id="常用命令"></a>
+
+## 常用命令
+
+### 1. git merge
+
+fast-forward 模式
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/merge_1.webp">
+
+no-fast-forward 模式
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/merge_2.webp">
+
+合并冲突并修复
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/merge_3.webp">
+
+### 2. git rebase
+
+用途一：变基，以指定的分支为当前分支的基座，将当前分支新增加的 commit 追加到基座分支的最上面
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/rebase_1.gif">
+
+用途二：提供 6 种操作模式操作 commit
+
+- reword：修改提交信息
+- edit：修改此提交
+- squash：将当前提交合并到之前的提交中
+- fixup：将当前提交合并到之前的提交中，不保留提交日志消息
+- exec：在每一个需要变基的提交上执行一条命令
+- drop：删除提交
+
+  drop 操作
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/rebase_2.webp">
+
+  squash 操作
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/rebase_3.webp">
+
+### 3. git reset
+
+移动当前分支的 HEAD 到指定的 commit 位置
+
+soft reset (--soft)
+
+撤销提交记录，但会保留修改的内容
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/reset_1.webp">
+
+hard reset（--hard）
+
+撤销提交记录，且不保留修改的内容
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/reset_2.webp">
+
+### 4. git revert
+
+撤销某个 commit 的修改，并添加一条新的 revert commit 记录, 即执行了指定 commit 的反向操作
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/revert_1.webp">
+
+### 5. git cherry-pick
+
+挑捡某个（或某些） commit 到当前分支
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/pick_1.webp">
+
+### 6. git fetch
+
+将远程服务器上的最新的修改下载下来, 并更新到本机的 remote 仓库，注意：这里是更新到本机的 remote 仓库，而不是工作的仓库
+
+### 7. git pull
+
+针对当前分支，将远程服务器上的最新的修改下载下来, 更新到本机的 remote 仓库的当前分支，并合并到当前分支
+
+git pull 指令实际做了两件事：git fetch 和 git merge
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/pull_1.webp">
+
+### 8. git reflog
+
+git reflog 用于显示所有已执行操作的日志！包括合并、重置、还原，也就是记录了对分支的一切更改行为
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/reflog_1.webp">
+
+依据 reflog 的 commit hash 可以还原到任何一个之前的状态
+
+   <img src="https://raw.githubusercontent.com/yangin/code-assets/main/code-style-guide/git/reflog_2.webp">
 
 **[⬆ 返回顶部](#目录)**
 
