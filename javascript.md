@@ -3313,7 +3313,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="22.3"></a>
   <a name="coercion--numbers"></a>
 
-- [22.3]()【强制】数字: 用 `Number` 做类型转换。 eslint: [`radix`](http://eslint.org/docs/rules/radix)
+- [22.3](*)【强制】数字: 用 `Number` 做类型转换。 eslint: [`radix`](http://eslint.org/docs/rules/radix)
 
   ```javascript
   const inputValue = "4";
@@ -3337,7 +3337,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="22.4"></a>
   <a name="coercion--booleans"></a>
 
-- [22.4]()【强制】布尔: 采用 `!!` 或者 `Boolean`来进行布尔转换。
+- [22.4](*)【强制】布尔: 采用 `!!` 或者 `Boolean`来进行布尔转换。
 
   ```javascript
   const age = 0;
@@ -3359,7 +3359,8 @@ _使用 JavaScript 最合理的方式_。
 <a name="23.1"></a>
 <a name="naming--descriptive"></a>
 
-- [23.1]()【强制】避免用一个字母命名，让你的命名有意义。eslint: [`id-length`](http://eslint.org/docs/rules/id-length)
+<!-- TODO: for 循环中的 let i ， catch(e)怎么解决 -->
+- [23.1](*)【强制】避免用一个字母命名，让你的命名有意义。eslint: [`id-length`](http://eslint.org/docs/rules/id-length)
 
   ```javascript
   // bad
@@ -3418,8 +3419,9 @@ _使用 JavaScript 最合理的方式_。
 
   <a name="23.4"></a>
   <a name="naming--leading-underscore"></a>
-
-- [23.4]()【推荐】不要用前置或后置下划线。eslint: [`no-underscore-dangle`](http://eslint.org/docs/rules/no-underscore-dangle.html)
+ 
+<!-- TODO: 允许方法参数名使用下划线，否则禁止 -->
+- [23.4](?)【推荐】不要用前置或后置下划线。eslint: [`no-underscore-dangle`](http://eslint.org/docs/rules/no-underscore-dangle.html)
 
   > 为什么？JavaScript 没有私有属性或私有方法的概念。尽管前置下划线通常的概念上意味着私有，事实上，这些属性是完全公有的，因此这部分也是你的 API 的内容。这一概念可能会导致开发者误以为更改这个不会导致崩溃或者不需要测试。如果你想要什么东西变成私有，那就不要让它在这里出现。
 
@@ -3436,7 +3438,8 @@ _使用 JavaScript 最合理的方式_。
   <a name="23.5"></a>
   <a name="naming--self-this"></a>
 
-- [23.5]()【强制】不要保存引用 `this`，用箭头函数或 [函数绑定——Function#bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)。
+<!-- TODO: Vue中常用到，怎么解决 -->
+- [23.5](*)【强制】不要保存引用 `this`，用箭头函数或 [函数绑定——Function#bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)。
 
   ```javascript
   // bad
@@ -3466,45 +3469,45 @@ _使用 JavaScript 最合理的方式_。
   <a name="23.6"></a>
   <a name="naming--filename-matches-export"></a>
 
-- [23.6]()【强制】`export default` 导出模块 A，则这个文件名也叫 `A.*`， `import` 时候的参数也叫 `A`。 大小写完全一致。
+- [23.6](*)【强制】`export default` 导出模块 A，则这个文件名也叫 `A.*`， `import` 时候的参数也叫 `A`。 大小写完全一致。
 
   ```javascript
   // file 1 contents
   class CheckBox {
     // ...
   }
-  export default CheckBox
+  export default CheckBox;
 
   // file 2 contents
-  export default function fortyTwo () { return 42 }
+  export default function fortyTwo() { return 42; }
 
   // file 3 contents
-  export default function insideDirectory () {}
+  export default function insideDirectory() {}
 
   // in some other file
   // bad
-  import CheckBox from './checkBox' // PascalCase import/export, camelCase filename
-  import FortyTwo from './FortyTwo' // PascalCase import/filename, camelCase export
-  import InsideDirectory from './InsideDirectory' // PascalCase import/filename, camelCase export
+  import CheckBox from './checkBox'; // PascalCase import/export, camelCase filename
+  import FortyTwo from './FortyTwo'; // PascalCase import/filename, camelCase export
+  import InsideDirectory from './InsideDirectory'; // PascalCase import/filename, camelCase export
 
   // bad
-  import CheckBox from './check_box' // PascalCase import/export, snake_case filename
-  import forty_two from './forty_two' // snake_case import/filename, camelCase export
-  import inside_directory from './inside_directory' // snake_case import, camelCase export
-  import index from './inside_directory/index' // requiring the index file explicitly
-  import insideDirectory from './insideDirectory/index' // requiring the index file explicitly
+  import CheckBox from './check_box'; // PascalCase import/export, snake_case filename
+  import forty_two from './forty_two'; // snake_case import/filename, camelCase export
+  import inside_directory from './inside_directory'; // snake_case import, camelCase export
+  import index from './inside_directory/index'; // requiring the index file explicitly
+  import insideDirectory from './insideDirectory/index'; // requiring the index file explicitly
 
   // good
-  import CheckBox from './CheckBox' // PascalCase export/import/filename
-  import fortyTwo from './fortyTwo' // camelCase export/import/filename
-  import insideDirectory from './insideDirectory' // camelCase export/import/directory name/implicit "index"
+  import CheckBox from './CheckBox'; // PascalCase export/import/filename
+  import fortyTwo from './fortyTwo'; // camelCase export/import/filename
+  import insideDirectory from './insideDirectory'; // camelCase export/import/directory name/implicit "index"
   // ^ supports both insideDirectory.js and insideDirectory/index.js
   ```
 
   <a name="23.7"></a>
   <a name="naming--camelCase-default-export"></a>
 
-- [23.7]()【强制】当你 export-default 一个函数时，函数名用小驼峰，文件名需要和函数名一致。
+- [23.7](*)【强制】当你 export-default 一个函数时，函数名用小驼峰，文件名需要和函数名一致。
 
   ```javascript
   function makeStyleGuide() {
@@ -3517,14 +3520,14 @@ _使用 JavaScript 最合理的方式_。
   <a name="23.8"></a>
   <a name="naming--PascalCase-singleton"></a>
 
-- [23.8]()【强制】当你 export 一个结构体/类/单例/函数库/对象 时用大驼峰。
+- [23.8](*)【强制】当你 export 一个结构体/类/单例/函数库/对象 时用大驼峰。
 
   ```javascript
-  const AirbnbStyleGuide = {
+  const StyleGuide = {
     es6: {},
   };
 
-  export default AirbnbStyleGuide;
+  export default StyleGuide;
   ```
 
   <a name="23.9"></a>
@@ -3568,7 +3571,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="23.10"></a>
   <a name="naming--uppercase"></a>
 
-- [23.10]()【强制】你可以用全大写字母设置静态变量（即常量），他需要满足三个条件`(1)`导出变量 `(2)`是 `const` 定义的， 保证不能被改变；`(3)`这个变量是可信的，他的子属性都是不能被改变的。
+- [23.10](*)【强制】你可以用全大写字母设置静态变量（即常量），他需要满足三个条件`(1)`导出变量 `(2)`是 `const` 定义的， 保证不能被改变；`(3)`这个变量是可信的，他的子属性都是不能被改变的。
 
   > 为什么？这是一个附加工具，帮助开发者去辨识一个变量是不是不可变的。UPPERCASE_VARIABLES 能让开发者知道他能确信这个变量（以及他的属性）是不会变的。
 
@@ -3620,7 +3623,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="24.2"></a>
   <a name="accessors--no-getters-setters"></a>
 
-- [24.2]()【强制】不要使用 JavaScript 的 getters/setters，因为他们会产生副作用，并且难以测试、维护和理解。相反的，你可以用 `getVal()` 和 `setVal('hello')` 去创造你自己的访问器函数。
+- [24.2](*)【强制】不要使用 JavaScript 的 getters/setters，因为他们会产生副作用，并且难以测试、维护和理解。相反的，你可以用 `getVal()` 和 `setVal('hello')` 去创造你自己的访问器函数。
 
   ```javascript
   // bad
@@ -3666,7 +3669,7 @@ _使用 JavaScript 最合理的方式_。
   <a name="24.4"></a>
   <a name="accessors--consistent"></a>
 
-- [24.4]()【强制】用 `get()` 和 `set()` 函数是可以的，但是要一起用。
+- [24.4](*)【强制】用 `get()` 和 `set()` 函数是可以的，但是要一起用。
 
   ```javascript
   class Jedi {
